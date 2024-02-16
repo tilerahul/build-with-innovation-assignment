@@ -1,10 +1,11 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 const Navbar = () => {
     return (
         <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6">
-            <div className="flex items-center flex-shrink-0 text-white mr-6"><span className="font-semibold text-xl tracking-tight">Build With Innvotion</span>
+            <div className="flex items-center flex-shrink-0 text-white mr-6">
+                <span className="font-semibold text-xl tracking-tight">Build With Innvotion</span>
             </div>
             <div className="block lg:hidden">
                 <button className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
@@ -38,7 +39,7 @@ const Navbar = () => {
                             </svg>
                         </button>
                     </div>
-                    <button type="button" className="mt-2 py-2 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Login</button>
+                    <Link to='/login' className="mt-2 py-2 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-teal-800 hover:text-slate-200 focus:z-10 focus:ring-4 focus:ring-gray-100">Login</Link>
                 </div>
             </div>
         </nav>
