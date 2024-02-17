@@ -3,9 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import axios from 'axios'
 import { LuEye, LuEyeOff } from "react-icons/lu";
+import { useAuth } from '../Reducers/Authentication/AuthContext';
 
 
 function Login() {
+
+  const {login} = useAuth();
   const [user, setUser] = useState({
     username : "",
     password : ""
@@ -25,13 +28,14 @@ function Login() {
 
     axios.post('https://dummyjson.com/auth/login', user)
     .then((response)=>{
-      console.log(response.data)
-      if(response.data.success){
-        toast.success(response.data.message);
+      console.log(response.data);
+      if(response){
+        login(response.data.token, response.data);
+        toast.success("Login Successful");
         navigate('/');
       }
       else{
-        toast.error(response.data.message);
+        toast.error("Error While Login");
       }
 
     })

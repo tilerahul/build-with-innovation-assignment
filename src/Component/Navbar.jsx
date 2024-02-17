@@ -1,9 +1,27 @@
-import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { useAuth } from '../Reducers/Authentication/AuthContext'
+import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
+import { FaUser } from "react-icons/fa";
+import { RiLogoutBoxRFill } from "react-icons/ri";
+import { FaShoppingCart } from "react-icons/fa";
+import { useCart } from '../Reducers/Cart/CartContext';
 
 const Navbar = () => {
+    const { state, logout } = useAuth();
+    const [dropDown, setDropDown] = useState(false);
+    const navigate = useNavigate();
+
+    const {totalItems} = useCart().cartState;
+    console.log("totalItem ", totalItems);
+
+    const logoutHandler = () => {
+        logout();
+        navigate('/login');
+
+    }
     return (
-        <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6">
+        <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6 sticky top-0">
             <div className="flex items-center flex-shrink-0 text-white mr-6">
                 <span className="font-semibold text-xl tracking-tight">Build With Innvotion</span>
             </div>
@@ -39,7 +57,39 @@ const Navbar = () => {
                             </svg>
                         </button>
                     </div>
-                    <Link to='/login' className="mt-2 py-2 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-teal-800 hover:text-slate-200 focus:z-10 focus:ring-4 focus:ring-gray-100">Login</Link>
+                    {state.isAuthenticated ?
+                        (<div className='flex items-center gap-2 font-medium relative'>
+                            <p className='text-slate-100'>{`${state.userData.firstName} ${state.userData.lastName}`}</p>
+                            <img src={state.userData.image} className='rounded-full border-2 w-[40px]' alt="img" />
+
+                            {dropDown ? (<IoMdArrowDropup onClick={() => { setDropDown(!dropDown) }} />) :
+                                (<IoMdArrowDropdown onClick={() => { setDropDown(!dropDown) }} />)
+                            }
+                            {
+                                dropDown && <div className='absolute top-9 left-6'>
+                                    <div className='w-[20px] h-[20px] bg-slate-100 rounded-md absolute -top-2 rotate-45 right-[82px]'></div>
+                                    <div className='w-[200px] h-[80px] bg-slate-100 rounded-md flex flex-col justify-center p-5 gap-2'>
+                                        <div className='flex items-center gap-2'>
+                                            <FaUser />
+                                            <Link to="/profile"> Your Profile</Link>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <RiLogoutBoxRFill />
+                                            <p onClick={logoutHandler} className='cursor-pointer'>Logout</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            }
+                            <div className='relative'>
+                                <FaShoppingCart size={25} />
+                                <div className='absolute -top-2 left-4 rounded-full text-white bg-black h-5 w-5 text-center flex items-center justify-center'><p>{totalItems}</p></div>
+                            </div>
+                        </div>
+
+                        ) :
+                        (<Link to='/login' className="mt-2 py-2 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-teal-800 hover:text-slate-200 focus:z-10 focus:ring-4 focus:ring-gray-100">Login</Link>)}
+
                 </div>
             </div>
         </nav>
