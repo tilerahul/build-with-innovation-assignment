@@ -13,7 +13,7 @@ const ProtectedRoute = () => {
         }else{
             navigate('/');
         }
-    })
+    }, [])
     return <Outlet />
 }
 

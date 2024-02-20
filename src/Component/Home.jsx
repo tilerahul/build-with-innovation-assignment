@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import Loader from './Loader/Loader';
+import { useCart } from '../Reducers/Cart/CartContext';
+import { useProduct } from '../Reducers/Products/ProductContext';
 
 const Home = () => {
-    const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const getAllProduct = async () => {
-        try {
-            setLoading(true);
-            const res = await axios.get('https://dummyjson.com/products');
-            console.log(res.data.products);
-            setData(res.data.products);
-            setLoading(false);
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    const {addToCart} = useCart();
+    const {productData, getAllProduct} = useProduct();
 
-    useEffect(() => {
+    useEffect(()=>{
+        setLoading(true);
         getAllProduct();
+        setLoading(false);
     }, [])
+    
     return (
         <div>
             {
@@ -28,8 +22,8 @@ const Home = () => {
                     (<Loader />) :
                     (<>
                         <div className='flex flex-wrap justify-center gap-6 my-10 mx-10'>
-                            {data.map((product) => (
-                                <div className="rounded overflow-hidden shadow-lg w-1/5 hover:scale-105" key={product.id}>
+                            {productData.map((product) => (
+                                <div className="rounded overflow-hidden shadow-lg w-1/5" key={product.id}>
                                     <img className="w-full aspect-[4/3] object-cover" src={product.images[0]} />
                                     <div className="px-6 py-4">
                                         <div className="font-bold text-xl mb-2">{product.title}</div>
@@ -37,7 +31,7 @@ const Home = () => {
                                         <p className='text-xl font-medium py-2 px-2'>{`₹${product.price - Math.round((product.price * product.discountPercentage) / 100)} `}<span className='text-sm line-through text-slate-500'>{product.price}</span><span className='text-sm text-slate-500'>{` (${product.discountPercentage}% off)`}</span></p>
                                         {
                                             product.stock > 0 ?
-                                                (<button className="w-full bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded">
+                                                (<button onClick={()=>addToCart(product)} className="w-full bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded">
                                                     Add to cart
                                                 </button>) :
                                                 (<button className="w-full bg-red-400 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">

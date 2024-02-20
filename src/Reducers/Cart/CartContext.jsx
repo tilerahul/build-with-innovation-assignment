@@ -3,7 +3,7 @@ import cartReducer from './cartReducer';
 
 const initialState = {
     cart: [],
-    totalItems: 2,
+    totalItems: 0,
     totalPrice: 0,
   };
 

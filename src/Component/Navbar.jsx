@@ -6,14 +6,16 @@ import { FaUser } from "react-icons/fa";
 import { RiLogoutBoxRFill } from "react-icons/ri";
 import { FaShoppingCart } from "react-icons/fa";
 import { useCart } from '../Reducers/Cart/CartContext';
+import { useProduct } from '../Reducers/Products/ProductContext';
 
 const Navbar = () => {
     const { state, logout } = useAuth();
     const [dropDown, setDropDown] = useState(false);
     const navigate = useNavigate();
+    const [search, setSearch] = useState('');
 
-    const {totalItems} = useCart().cartState;
-    console.log("totalItem ", totalItems);
+    const { totalItems } = useCart().cartState;
+    const {getAllProduct} = useProduct();
 
     const logoutHandler = () => {
         logout();
@@ -46,8 +48,10 @@ const Navbar = () => {
 
                     <div className="pt-2 relative mx-auto text-gray-600">
                         <input className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
-                            type="search" name="search" placeholder="Search" />
-                        <button type="submit" className="absolute right-0 top-0 mt-5 mr-4">
+                            type="search" name="search" placeholder="Search"
+                            onChange={(e)=>{setSearch(e.target.value)}}
+                            />
+                        <button type="submit" onClick={()=>{getAllProduct(search)}} className="absolute right-0 top-0 mt-5 mr-4">
                             <svg className="text-gray-600 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg"
                                 xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px"
                                 viewBox="0 0 56.966 56.966" xmlSpace="preserve"
@@ -82,8 +86,13 @@ const Navbar = () => {
                                 </div>
                             }
                             <div className='relative'>
-                                <FaShoppingCart size={25} />
-                                <div className='absolute -top-2 left-4 rounded-full text-white bg-black h-5 w-5 text-center flex items-center justify-center'><p>{totalItems}</p></div>
+                                <Link to="/cart">
+                                    <FaShoppingCart size={25} />
+                                </Link>
+                                {
+                                    totalItems > 0 &&
+                                    <div className='absolute -top-2 left-4 rounded-full text-white bg-black h-5 w-5 text-center flex items-center justify-center'><p>{totalItems}</p></div>
+                                }
                             </div>
                         </div>
 

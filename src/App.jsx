@@ -4,6 +4,7 @@ import Navbar from "./Component/Navbar";
 import Footer from "./Component/Footer";
 import Login from "./Component/Login";
 import ProtectedRoute from "./Component/ProtectedRoute";
+import Cart from "./Component/Cart";
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Home />} />
         </Route>
         <Route path="/login" element={<Login />} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
       <Footer />
     </BrowserRouter>
