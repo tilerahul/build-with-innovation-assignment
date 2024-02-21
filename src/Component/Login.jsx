@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import axios from 'axios'
@@ -8,7 +8,7 @@ import { useAuth } from '../Reducers/Authentication/AuthContext';
 
 function Login() {
 
-  const {login} = useAuth();
+  const {state, login} = useAuth();
   const [user, setUser] = useState({
     username : "",
     password : ""
@@ -16,6 +16,11 @@ function Login() {
   const [isPassword, setIsPassword] = useState(true);
 
   const navigate = useNavigate();
+  useEffect(()=>{
+    if(state.isAuthenticated){
+      navigate('/');
+    }
+  },[state])
 
   const changeHandler = (e) =>{
     setUser({...user,
@@ -52,7 +57,7 @@ function Login() {
           <div className="w-full max-w-md bg-white rounded-lg shadow dark:border   mt-9">
             <div className="p-6 space-y-4 md:space-y-6">
               <div className="flex justify-center mb-6 text-2xl font-semibold text-gray-900 ">
-                Build With Innovation
+                Innovation Store
               </div>
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
                 Sign in to your account

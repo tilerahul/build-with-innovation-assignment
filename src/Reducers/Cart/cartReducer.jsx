@@ -7,6 +7,7 @@ const cartReducer = (state, action) => {
           cart: [...state.cart, newItem],
           totalItems: state.totalItems + 1,
           totalPrice: state.totalPrice + newItem.price,
+          discountedPrice : state.discountedPrice + newItem.price*newItem.discountPercentage/100,
         };
       case 'REMOVE_FROM_CART':
         const removedItemId = action.payload;
@@ -16,6 +17,7 @@ const cartReducer = (state, action) => {
           cart: state.cart.filter(item => item.id !== removedItemId),
           totalItems: state.totalItems - 1,
           totalPrice: state.totalPrice - (removedItem ? removedItem.price : 0),
+          discountedPrice: state.discountedPrice - (removedItem ? removedItem.price*removedItem.discountPercentage/100 : 0),
         };
       case 'UPDATE_QUANTITY':
         const { id, quantity } = action.payload;

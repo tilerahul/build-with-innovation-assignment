@@ -1,20 +1,18 @@
 import { useEffect } from 'react';
-import { useAuth } from '../Reducers/Authentication/AuthContext';
-import toast from 'react-hot-toast';
 import { Outlet, useNavigate } from 'react-router-dom';
 
-const ProtectedRoute = () => {
-    const { isAuthenticated } = useAuth().state;
+const ProtectedRoute = ({isAuthenticated}) => {
     const navigate = useNavigate();
+
     useEffect(() => {
-        if (!isAuthenticated) {
-            toast.error('please Login first');
+        if (isAuthenticated) {
             navigate('/login');
-        }else{
-            navigate('/');
         }
-    }, [])
-    return <Outlet />
+    }, [isAuthenticated])
+
+
+
+    return <Outlet />;
 }
 
 export default ProtectedRoute;

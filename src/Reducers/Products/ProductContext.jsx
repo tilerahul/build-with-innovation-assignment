@@ -10,16 +10,32 @@ export const ProductProvider = ({ children }) => {
   const getAllProduct = async (search = '') => {
     try {
       const res = await axios.get(`https://dummyjson.com/products/search?q=${search}`);
-
       console.log(res.data.products);
-      setProductData(res.data.products);  
+      setProductData(res.data.products); 
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const sortedProduct = async (sort) => {
+    try {
+      const res = await axios.get(`https://dummyjson.com/products`);
+      
+      if(sort === 'lowToHigh'){
+        return setProductData(res.data.products.slice().sort((a, b) => a.price - b.price));
+      }
+      if(sort === 'highToLow'){
+        return setProductData(res.data.products.slice().sort((a, b) => b.price - a.price));
+      }else{
+        return setProductData(res.data.products); 
+      }
     } catch (error) {
       console.log(error);
     }
   }
 
   return (
-    <ProductContext.Provider value={{ productData, setProductData, getAllProduct}}>
+    <ProductContext.Provider value={{ productData, setProductData, getAllProduct, sortedProduct}}>
       {children}
     </ProductContext.Provider>
   );

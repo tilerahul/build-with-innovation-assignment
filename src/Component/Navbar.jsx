@@ -25,7 +25,9 @@ const Navbar = () => {
     return (
         <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6 sticky top-0">
             <div className="flex items-center flex-shrink-0 text-white mr-6">
-                <span className="font-semibold text-xl tracking-tight">Build With Innvotion</span>
+                <Link to={'/'}>
+                <span className="font-semibold text-xl tracking-tight">Innovation Store</span>
+                </Link>
             </div>
             <div className="block lg:hidden">
                 <button className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
@@ -34,13 +36,13 @@ const Navbar = () => {
             </div>
             <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
                 <div className="text-md lg:flex-grow">
-                    <NavLink to="/" className="block mt-4 lg:inline-block lg:mt-0 text-teal-100 hover:text-white mr-4">
+                    <NavLink to="/category" className="block mt-4 lg:inline-block lg:mt-0 text-teal-100 hover:text-white mr-4">
                         Categories
                     </NavLink>
-                    <NavLink to="/" className="block mt-4 lg:inline-block lg:mt-0 text-teal-100 hover:text-white mr-4">
+                    <NavLink to="/contact" className="block mt-4 lg:inline-block lg:mt-0 text-teal-100 hover:text-white mr-4">
                         Contact
                     </NavLink>
-                    <NavLink to="/" className="block mt-4 lg:inline-block lg:mt-0 text-teal-100 hover:text-white">
+                    <NavLink to="/about" className="block mt-4 lg:inline-block lg:mt-0 text-teal-100 hover:text-white">
                         About Us
                     </NavLink>
                 </div>
@@ -71,7 +73,7 @@ const Navbar = () => {
                             }
                             {
                                 dropDown && <div className='absolute top-9 left-6'>
-                                    <div className='w-[20px] h-[20px] bg-slate-100 rounded-md absolute -top-2 rotate-45 right-[82px]'></div>
+                                    <div className='w-[20px] h-[20px] bg-slate-100 rounded-md absolute -top-2 rotate-45 right-[22px]'></div>
                                     <div className='w-[200px] h-[80px] bg-slate-100 rounded-md flex flex-col justify-center p-5 gap-2'>
                                         <div className='flex items-center gap-2'>
                                             <FaUser />
